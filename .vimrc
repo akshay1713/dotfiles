@@ -104,3 +104,9 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 set foldmethod=indent
 set foldlevel=99
+set cursorline
+"hi CursorLine ctermbg=8 ctermfg=15 "8 = dark gray, 15 = white
+"hi Cursor ctermbg=15 ctermfg=8"
+let g:syntastic_check_on_open = 1
+let g:syntastic_python_checkers=['flake8']
+let g:syntastic_python_flake8_args='--ignore=E501,E225'
