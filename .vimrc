@@ -25,8 +25,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'mattn/emmet-vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'dkprice/vim-easygrep'
-"Plugin 'joonty/vim-phpqa'
-"Plugin 'stephpy/vim-php-cs-fixer'
 Plugin 'joonty/vim-phpunitqf.git'
 Plugin 'SirVer/ultisnips'
 Plugin 'tobyS/vmustache'
@@ -34,6 +32,7 @@ Plugin 'tobyS/pdv'
 Plugin 'honza/vim-snippets'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'stephpy/vim-php-cs-fixer'
+Plugin 'vim-airline/vim-airline'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
