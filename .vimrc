@@ -25,7 +25,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'mattn/emmet-vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'dkprice/vim-easygrep'
-Plugin 'joonty/vim-phpunitqf.git'
+"Plugin 'joonty/vim-phpunitqf.git'
 Plugin 'SirVer/ultisnips'
 Plugin 'tobyS/vmustache'
 Plugin 'tobyS/pdv'
@@ -191,3 +191,5 @@ function! Multiple_cursors_after()
     exe 'NeoCompleteUnlock'
   endif
 endfunction
+"Save on normal mode
+inoremap <Esc> <Esc>:w<CR>
