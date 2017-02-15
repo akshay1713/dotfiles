@@ -116,19 +116,7 @@ endfunction
 "autocmd CursorMoved,CursorMovedI * call s:Cursor_Moved()
 let g:last_pos = 0
 nnoremap <F5> :buffers<CR>:buffer<Space>
-set statusline=%t       "tail of the filename
-set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
-set statusline+=%{&ff}] "file format
-set statusline+=%h      "help file flag
-set statusline+=%m      "modified flag
-set statusline+=%r      "read only flag
-set statusline+=%y      "filetype
-set statusline+=%=      "left/right separator
-set statusline+=%c,     "cursor column
-set statusline+=%l/%L   "cursor line/total lines
-set statusline+=\ %P    "percent through file
-set statusline+=%{fugitive#statusline()} "git branch"
-
+"
 "split tabs right and below
 set splitbelow
 set splitright
@@ -192,4 +180,4 @@ function! Multiple_cursors_after()
   endif
 endfunction
 "Save on normal mode
-inoremap <Esc> <Esc>:w<CR>
+"inoremap <Esc> <Esc>:w<CR>
