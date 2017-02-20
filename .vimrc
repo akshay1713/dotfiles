@@ -181,3 +181,15 @@ function! Multiple_cursors_after()
 endfunction
 "Save on normal mode
 "inoremap <Esc> <Esc>:w<CR>
+
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+"Autodocument php code using tobyS/pdv
+let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
+nnoremap pd :call pdv#DocumentWithSnip()<CR>
+set relativenumber 
+set number  
+autocmd InsertLeave * :w
