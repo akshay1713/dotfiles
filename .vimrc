@@ -24,15 +24,16 @@ Plugin 'ternjs/tern_for_vim'
 Plugin 'tpope/vim-surround'
 Plugin 'mattn/emmet-vim'
 Plugin 'pangloss/vim-javascript'
-Plugin 'dkprice/vim-easygrep'
+"Plugin 'dkprice/vim-easygrep'
 "Plugin 'joonty/vim-phpunitqf.git'
 Plugin 'SirVer/ultisnips'
 Plugin 'tobyS/vmustache'
 Plugin 'tobyS/pdv'
 Plugin 'honza/vim-snippets'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'stephpy/vim-php-cs-fixer'
+"Plugin 'stephpy/vim-php-cs-fixer'
 Plugin 'vim-airline/vim-airline'
+let g:javascript_plugin_jsdoc = 1
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -60,14 +61,17 @@ set visualbell
 "confirm before quitting if unsaved buffers
 set confirm
 
+set relativenumber 
+set number  
+
 "go to function
 map <c-]> g<c-]>
 
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
-nnoremap nt :NERDTreeToggle<CR>
-nnoremap ln :set invnumber<CR>
+nnoremap <Leader>d :NERDTreeToggle<CR>
+nnoremap <Leader>l :set invnumber<CR>
 let g:solarized_termcolors=256
 set background=dark
 colorscheme default 
@@ -164,14 +168,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips']
 
-"Prevent conflict between multiple cursors and neocomplete
-"(https://github.com/terryma/vim-multiple-cursors)
-" Called once right before you start selecting multiple cursors
-function! Multiple_cursors_before()
-  if exists(':NeoCompleteLock')==2
-    exe 'NeoCompleteLock'
-  endif
-endfunction
 
 " Called once only when the multiple selection is canceled (default <Esc>)
 function! Multiple_cursors_after()
@@ -179,8 +175,15 @@ function! Multiple_cursors_after()
     exe 'NeoCompleteUnlock'
   endif
 endfunction
-"Save on normal mode
-"inoremap <Esc> <Esc>:w<CR>
+
+"Prevent conflict between multiple cursors and neocomplete
+"(https://github.com/terryma/vimmultiplecursors)
+" Called once right before you start selecting multiple cursors
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
 
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 function! ExecuteMacroOverVisualRange()
@@ -190,6 +193,19 @@ endfunction
 "Autodocument php code using tobyS/pdv
 let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
 nnoremap pd :call pdv#DocumentWithSnip()<CR>
-set relativenumber 
-set number  
 autocmd InsertLeave * :w
+nnoremap <c-l> :redraw! <CR>
+nnoremap <Leader>ev :e ~/.vimrc <CR>
+nnoremap <Leader>s :so ~/.vimrc <CR>
+nnoremap <Leader>c :s/\v(\S),(\S)/\1, \2/g <CR>
+nnoremap gp `[v`]
+let g:syntastic_disabled_filetypes=['html']
+" Move up and down in neocomplete with <c-j> and <c-k>
+inoremap <expr> <c-j> ("\<C-n>")
+inoremap <expr> <c-k> ("\<C-p>")
+nnoremap <Leader>c[ <S-%>r]<C-o>r[
+nnoremap <Leader>c( <S-%>r)<C-o>r(
+nnoremap <Leader>p "+p
+nnoremap <Leader>y "+y
+inoremap <c-h> <Left>
+inoremap <c-l> <Right>
