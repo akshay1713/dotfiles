@@ -33,8 +33,8 @@ Plugin 'honza/vim-snippets'
 Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'stephpy/vim-php-cs-fixer'
 Plugin 'vim-airline/vim-airline'
+"Plugin 'flowtype/vim-flow'
 let g:javascript_plugin_jsdoc = 1
-
 call vundle#end()            " required
 filetype plugin indent on    " required
 filetype plugin on
@@ -79,7 +79,7 @@ let g:neocomplete#enable_at_startup = 1
 "
 "tell ctrlp to ignore certain directories
 let g:ctrlp_custom_ignore = {
-  \ 'dir': '\.git\|node_modules\|fonts\|vendor\|plugins\|storage$' 
+  \ 'dir': '\.git\|\node_modules\|fonts\|vendor\|plugins\|storage$' 
   \ }
 
 "use ag while searching (not grep)
@@ -87,16 +87,9 @@ set grepprg=ag\ --nogroup\ --nocolor
 set runtimepath^=~/.vim/bundle/ag
 set completeopt-=preview
 
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 "ctrlp cache
 let g:ctrlp_cache_dir = '~/.cache/ctrlp'
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  "let g:ctrlp_use_caching = 0
-endif
 
 "set tab to 4 spaces
 set tabstop=4 softtabstop=4 expandtab shiftwidth=4
@@ -138,6 +131,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_python_checkers=['']
 let g:syntastic_python_flake8_args='--ignore=E501,E225'
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
+let g:syntastic_javascript_checkers=['jshint']
 let g:syntastic_php_phpcs_args='--standard=PSR2 -n'
 
 "faster buffer switching
@@ -199,7 +193,7 @@ nnoremap <Leader>ev :e ~/.vimrc <CR>
 nnoremap <Leader>s :so ~/.vimrc <CR>
 nnoremap <Leader>c :s/\v(\S),(\S)/\1, \2/g <CR>
 nnoremap gp `[v`]
-let g:syntastic_disabled_filetypes=['html']
+let g:syntastic_mode_map = { 'passive_filetypes': ['html'] }
 " Move up and down in neocomplete with <c-j> and <c-k>
 inoremap <expr> <c-j> ("\<C-n>")
 inoremap <expr> <c-k> ("\<C-p>")
@@ -209,3 +203,4 @@ nnoremap <Leader>p "+p
 nnoremap <Leader>y "+y
 inoremap <c-h> <Left>
 inoremap <c-l> <Right>
+nnoremap <Leader>fv :%s/\vfunction ([a-zA-Z]*)\s*\(([^)]*)\)/\1 : function(\2)/g <CR>
