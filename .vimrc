@@ -1,3 +1,4 @@
+let mapleader="\\"
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -34,6 +35,9 @@ Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'stephpy/vim-php-cs-fixer'
 Plugin 'vim-airline/vim-airline'
 "Plugin 'flowtype/vim-flow'
+Plugin 'heavenshell/vim-jsdoc'
+Plugin 'python-mode/python-mode'
+Plugin 'heavenshell/vim-pydocstring'
 let g:javascript_plugin_jsdoc = 1
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -186,21 +190,48 @@ execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 "Autodocument php code using tobyS/pdv
 let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
-nnoremap pd :call pdv#DocumentWithSnip()<CR>
+nnoremap <Leader>pd :call pdv#DocumentWithSnip()<CR>
+nnoremap <Leader>jd :JsDoc<CR>
+nnoremap <Leader>yd :Pydocstring<CR>
 autocmd InsertLeave * :w
 nnoremap <c-l> :redraw! <CR>
 nnoremap <Leader>ev :e ~/.vimrc <CR>
 nnoremap <Leader>s :so ~/.vimrc <CR>
-nnoremap <Leader>c :s/\v(\S),(\S)/\1, \2/g <CR>
+nnoremap <Leader>, :s/\v(\S),(\S)/\1, \2/g <CR>
+nnoremap <Leader>: :s/\v(\S)?:(\S)?/\1 : \2/g <CR>
 nnoremap gp `[v`]
 let g:syntastic_mode_map = { 'passive_filetypes': ['html'] }
 " Move up and down in neocomplete with <c-j> and <c-k>
-inoremap <expr> <c-j> ("\<C-n>")
-inoremap <expr> <c-k> ("\<C-p>")
+inoremap <expr> <C-j> ("\<C-n>")
+inoremap <expr> <C-k> ("\<C-p>")
 nnoremap <Leader>c[ <S-%>r]<C-o>r[
 nnoremap <Leader>c( <S-%>r)<C-o>r(
 nnoremap <Leader>p "+p
-nnoremap <Leader>y "+y
-inoremap <c-h> <Left>
-inoremap <c-l> <Right>
+xnoremap <Leader>y "+y
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
 nnoremap <Leader>fv :%s/\vfunction ([a-zA-Z]*)\s*\(([^)]*)\)/\1 : function(\2)/g <CR>
+nnoremap <Leader>ma :s/\v([.()a-zA-Z]+,)/\1\r/g <CR>
+nnoremap <Leader>vv yiw :Ag <c-r>0 <CR>
+xnoremap <Leader>vv :call get_visual_selection()
+function! s:GetVisualSelection()
+  let [lnum1, col1] = getpos("'<")[1:2]j
+  let [lnum2, col2] = getpos("'>")[1:2]
+  let lines = getline(lnum1, lnum2)
+  let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][col1 - 1:]
+  return join(lines, "\n")
+endfunction
+  " <TAB>: completion.
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ neocomplete#start_manual_complete()
+  function! s:check_back_space()
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction
+set showcmd
+nnoremap <Leader>o o<Esc>k
+nnoremap <Leader>O O<Esc>j
+let delimitMate_expand_cr=1
+imap <C-Return> <CR><CR><C-o>k<Tab>
